@@ -9,8 +9,9 @@ import {
   Users,
   Zap,
 } from "lucide-react";
-
+import { useNavigate } from "react-router";
 const About = () => {
+const navigate = useNavigate()
   return (
     <main className="min-h-screen bg-[#0d0d0d] px-4 py-10 text-white sm:px-6 lg:px-8">
       <div className="mx-auto w-full max-w-5xl">
@@ -366,7 +367,9 @@ const About = () => {
             Explore thousands of products at unbeatable prices.
           </p>
 
-          <button className="mt-6 inline-flex items-center gap-2 rounded-xl bg-[#eaff00] px-6 py-3 text-sm font-medium text-black transition hover:scale-105">
+          <button onClick={()=>{
+            navigate("/shop")
+          }} className="mt-6 inline-flex items-center gap-2 rounded-xl cursor-pointer bg-[#eaff00] px-6 py-3 text-sm font-medium text-black transition hover:scale-105">
             Browse Products
             <ArrowRight size={16} />
           </button>

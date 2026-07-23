@@ -8,10 +8,18 @@ import {
 
 import { useState } from "react";
 import { NavLink } from "react-router";
+import { useNavigate } from "react-router";
 const Navbar = () => {
+  const user = JSON.parse(localStorage.getItem("currentUser"))
+
 
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const logoutHandler = () => {
+    localStorage.removeItem("currentUser");
 
+    navigate("/login", { replace: true });
+  };
 
   return (
     <header className="fixed left-0 top-0 z-50 w-full border-b border-white/10 bg-[#0d0d0d] text-white">
@@ -43,44 +51,41 @@ const Navbar = () => {
 
         {/* DESKTOP MENU */}
 
-      <div className="hidden items-center gap-7 text-sm font-medium text-gray-500 md:flex">
+        <div className="hidden items-center gap-7 text-sm font-medium text-gray-500 md:flex">
 
-  <NavLink
-    to="/home"
-    className={({ isActive }) =>
-      `transition hover:text-amber-50 ${
-        isActive ? "text-[#eaff00]" : ""
-      }`
-    }
-  >
-    Home
-  </NavLink>
-
-
-  <NavLink
-    to="/shop"
-    className={({ isActive }) =>
-      `transition hover:text-amber-50 ${
-        isActive ? "text-[#eaff00]" : ""
-      }`
-    }
-  >
-    Shop
-  </NavLink>
+          <NavLink
+            to="/home"
+            className={({ isActive }) =>
+              `transition hover:text-amber-50 ${isActive ? "text-[#eaff00]" : ""
+              }`
+            }
+          >
+            Home
+          </NavLink>
 
 
-  <NavLink
-    to="/about"
-    className={({ isActive }) =>
-      `transition hover:text-amber-50 ${
-        isActive ? "text-[#eaff00]" : ""
-      }`
-    }
-  >
-    About
-  </NavLink>
+          <NavLink
+            to="/shop"
+            className={({ isActive }) =>
+              `transition hover:text-amber-50 ${isActive ? "text-[#eaff00]" : ""
+              }`
+            }
+          >
+            Shop
+          </NavLink>
 
-</div>
+
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              `transition hover:text-amber-50 ${isActive ? "text-[#eaff00]" : ""
+              }`
+            }
+          >
+            About
+          </NavLink>
+
+        </div>
 
 
         {/* RIGHT SIDE */}
@@ -90,18 +95,17 @@ const Navbar = () => {
 
           {/* USER DESKTOP ONLY */}
 
-          <div className="hidden items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 md:flex">
+          <div className="hidden max-w-[180px] items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 md:flex">
 
-            <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#eaff00] text-xs font-bold text-black">
-              U
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#eaff00] text-xs font-bold text-black">
+              {user?.name?.[0]?.toUpperCase()}
             </div>
 
-            <span className="text-sm">
-              User1
+            <span className="truncate text-sm font-medium">
+              {user?.name}
             </span>
 
           </div>
-
 
 
           {/* CART */}
@@ -110,7 +114,7 @@ const Navbar = () => {
             className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-gray-300 hover:text-[#eaff00]"
           >
 
-            <ShoppingCart size={19}/>
+            <ShoppingCart size={19} />
 
           </button>
 
@@ -119,28 +123,26 @@ const Navbar = () => {
           {/* LOGOUT */}
 
           <button
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-gray-300 hover:text-[#eaff00]"
+            onClick={logoutHandler}
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-gray-300 transition-all duration-200 hover:border-red-500 hover:bg-red-500/10 hover:text-red-500"
           >
-
-            <LogOut size={19}/>
-
+            <LogOut size={19} />
           </button>
-
 
 
           {/* MOBILE MENU BUTTON */}
 
           <button
-            onClick={()=>setOpen(!open)}
+            onClick={() => setOpen(!open)}
             className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 md:hidden"
           >
 
             {
               open
-              ?
-              <X size={20}/>
-              :
-              <Menu size={20}/>
+                ?
+                <X size={20} />
+                :
+                <Menu size={20} />
             }
 
 
@@ -182,7 +184,7 @@ const Navbar = () => {
 
               <button className="flex items-center gap-2 text-left text-amber-800 hover:text-[#eaff00]">
 
-                <LogOut size={17}/>
+                <LogOut size={17} />
 
                 Logout
 

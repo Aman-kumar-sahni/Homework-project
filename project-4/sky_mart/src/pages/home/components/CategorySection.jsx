@@ -30,8 +30,9 @@ const categories = [
     icon: "📦",
   },
 ];
-
+import { useNavigate } from "react-router";
 const CategorySection = () => {
+ const navigate= useNavigate()
   return (
     <section>
 
@@ -41,7 +42,9 @@ const CategorySection = () => {
           Shop by Category
         </h2>
 
-        <button className="text-sm font-semibold text-[#dfff00]">
+        <button onClick={()=>{
+          navigate("/shop")
+        }} className="text-sm font-semibold text-[#dfff00]">
           View All →
         </button>
 

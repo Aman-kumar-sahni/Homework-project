@@ -31,15 +31,21 @@ const AppRoutes = () => {
                     }
                 />
 
-                <Route element={<MainLayout />}>
+                <Route
+                    element={
+                        <ProtectedRoute>
+                            <MainLayout />
+                        </ProtectedRoute>
+                    }
+                >
 
-                    <Route path="/home" element={<ProtectedRoute>
-                        <Home />
-                    </ProtectedRoute>} />
+                    <Route path="/home" element={<Home />} />
+
                     <Route path="/about" element={<About />} />
-                    <Route path="/shop" element={<Shop />} />
-                </Route>
 
+                    <Route path="/shop" element={<Shop />} />
+
+                </Route>
             </Routes>
 
 

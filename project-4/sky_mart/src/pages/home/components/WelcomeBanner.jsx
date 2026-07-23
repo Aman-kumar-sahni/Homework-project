@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router";
 
 const WelcomeSection = () => {
+ const user = JSON.parse(localStorage.getItem("currentUser"));
+
+const firstName = user?.name?.split(" ")[0];
   const navigate=useNavigate()
   return (
     <section className="rounded-3xl border border-white/70 p-6 sm:p-8 lg:p-12">
@@ -18,7 +21,7 @@ const WelcomeSection = () => {
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             Welcome back,
             <span className="block text-[#dfff00]">
-              User!
+            {`${firstName}!`}
             </span>
           </h1>
 
