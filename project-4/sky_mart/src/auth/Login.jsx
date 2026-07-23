@@ -6,16 +6,71 @@ import {
   Zap,
 } from "lucide-react";
 
+import { NavLink, useNavigate } from "react-router";
+
+import { useForm } from "react-hook-form";
+import { useContext } from "react";
+import { MyContext } from "../context/MyContext";
+import { useEffect } from "react";
+
+
 const Login = () => {
+
+
+  const { error, setError } = useContext(MyContext)
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const emailValue = watch("email");
+  const passwordValue = watch("password");
+  useEffect(() => {
+    if (emailValue || passwordValue) {
+      setError("");
+    }
+  }, [emailValue, passwordValue]);
+
+  const onSubmit = (data) => {
+
+    // Get all registered users
+    const users =
+      JSON.parse(localStorage.getItem("sm-user")) || [];
+
+
+    // Find user by email
+    const currentUser = users.find(
+      ({ email }) => email === data.email
+    );
+
+
+    // Email not found
+    if (!currentUser) {
+      setError("Invalid Email");
+      return;
+    }
+    if (currentUser.password !== data.password) {
+      setError("Incorrect Password");
+      return;
+    }
+
+    setError("");
+
+    localStorage.setItem(
+      "currentUser",
+      JSON.stringify(currentUser)
+    );
+
+
+
+    navigate("/home");
+  };
   return (
     <main className="min-h-screen bg-[#151515] text-white">
       <div className="flex min-h-screen flex-col lg:flex-row">
-
-
-        {/* =====================================================
-            LEFT SIDE — BRANDING / HERO SECTION
-        ====================================================== */}
-
+        {/* LEFT SIDE */}
         <section className="flex w-full flex-col justify-between border-b border-white/10 px-6 py-8 sm:px-10 lg:min-h-screen lg:w-1/2 lg:border-b-0 lg:border-r lg:px-12 xl:px-16">
 
 
@@ -108,123 +163,204 @@ const Login = () => {
 
         </section>
 
-
-        {/* =====================================================
-            RIGHT SIDE — SIGN IN SECTION
-        ====================================================== */}
+        {/* RIGHT SIDE */}
 
         <section className="flex w-full flex-1 items-center justify-center px-5 py-12 sm:px-8 lg:min-h-screen lg:w-1/2 lg:px-12">
-
-
-          {/* ---------------- SIGN IN CARD ---------------- */}
-
           <div className="w-full max-w-md">
-
             <div className="rounded-3xl border border-white/10 bg-[#191919] p-6 shadow-2xl sm:p-8">
-
-
-              {/* ---------------- HEADER ---------------- */}
-
               <div className="mb-8">
-
                 <h2 className="text-2xl font-bold sm:text-3xl">
                   Sign in
                 </h2>
-
                 <p className="mt-2 text-sm text-gray-400">
                   Enter your credentials to continue
+
                 </p>
 
+
               </div>
 
 
-              {/* ---------------- EMAIL INPUT ---------------- */}
 
-              <div className="mb-4">
 
-                <div className="flex items-center gap-3 rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition focus-within:border-[#eaff00]">
+              {/* FORM START */}
 
-                  <Mail
-                    size={18}
-                    className="shrink-0 text-gray-400"
-                  />
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="mb-4">
 
-                  <input
-                    type="email"
-                    placeholder="Email address"
-                    className="w-full bg-transparent text-sm text-white outline-none placeholder:text-gray-400"
-                  />
+
+                  <div className="flex items-center gap-3 rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition focus-within:border-[#eaff00]">
+                    <Mail
+                      size={18}
+                      className="shrink-0 text-gray-400"
+                    />
+                    <input
+
+                      type="email"
+                      onChange={() => setError("")}
+
+                      placeholder="Email address"
+
+                      className="w-full bg-transparent text-sm text-white outline-none placeholder:text-gray-400"
+                      {...register("email", {
+
+                        required:
+                          "Email is required",
+
+
+                        pattern: {
+
+                          value:
+                            /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
+
+                          message:
+                            "Enter a valid email"
+
+                        }
+
+                      })}
+
+                    />
+
+
+
+                  </div>
+                  {errors.email && (
+
+                    <p className="mt-2 text-sm text-red-500">
+
+                      {errors.email.message}
+
+                    </p>
+
+
+                  )}
 
                 </div>
 
-              </div>
 
 
-              {/* ---------------- PASSWORD INPUT ---------------- */}
 
-              <div className="mb-6">
 
-                <div className="flex items-center gap-3 rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition focus-within:border-[#eaff00]">
+                {/* PASSWORD */}
 
-                  <LockKeyhole
-                    size={18}
-                    className="shrink-0 text-gray-400"
-                  />
 
-                  <input
-                    type="password"
-                    placeholder="Password"
-                    className="w-full bg-transparent text-sm text-white outline-none placeholder:text-gray-400"
-                  />
+                <div className="mb-6">
+                  <div className="flex items-center gap-3 rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition focus-within:border-[#eaff00]">
+                    <LockKeyhole
+                      size={18}
+                      className="shrink-0 text-gray-400"
+                    />
 
-                  <Eye
-                    size={18}
-                    className="shrink-0 cursor-pointer text-gray-400 transition hover:text-white"
-                  />
+                    <input
+
+                      type="password"
+                      onChange={() => setError("")}
+
+                      placeholder="Password"
+
+                      className="w-full bg-transparent text-sm text-white outline-none placeholder:text-gray-400"
+
+                      {...register("password", {
+
+                        required:
+                          "Password is required"
+
+                      })}
+
+                    />
+                    <Eye
+                      size={18}
+                      className="shrink-0 cursor-pointer text-gray-400 transition hover:text-white"
+                    />
+
+
+                  </div>
+
+
+
+                  {errors.password && (
+
+                    <p className="mt-2 text-sm text-red-500">
+
+                      {errors.password.message}
+
+                    </p>
+
+                  )}
+                  {error && (
+                    <p className="mt-2 text-center text-sm text-red-500">
+                      {error}
+                    </p>
+                  )}
+
+
 
                 </div>
 
-              </div>
+                <button
+                  type="submit"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#eaff00] py-3.5 font-medium text-black transition hover:bg-[#dfff00] active:scale-[0.98]"
+                >
+
+                  Sign in
+
+                  <ArrowRight
+                    size={18}
+                  />
+
+                </button>
 
 
-              {/* ---------------- SIGN IN BUTTON ---------------- */}
-
-              <button
-                type="button"
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#eaff00] py-3.5 font-medium text-black transition hover:bg-[#dfff00] active:scale-[0.98]"
-              >
-
-                Sign in
-
-                <ArrowRight
-                  size={18}
-                />
-
-              </button>
 
 
-              {/* ---------------- REGISTER LINK ---------------- */}
 
-              <p className="mt-6 text-center text-sm text-gray-400">
+                {/* REGISTER LINK */}
 
-                Don't have an account?{" "}
+                <p className="mt-6 text-center text-sm text-gray-400">
 
-                <span className="cursor-pointer font-semibold text-[#eaff00] hover:underline">
-                  Create one
-                </span>
+                  Don't have an account?{" "}
 
-              </p>
+                  <NavLink
+
+                    to="/register"
+
+                    className="cursor-pointer font-semibold text-[#eaff00] !no-underline hover:!no-underline"
+
+                  >
+
+                    Create one
+
+                  </NavLink>
+
+
+                </p>
+
+
+
+
+              </form>
+
+              {/* FORM END */}
+
+
 
             </div>
 
           </div>
 
+
         </section>
+
 
       </div>
 
+
     </main>
+
   );
+
 };
+
 
 export default Login;
