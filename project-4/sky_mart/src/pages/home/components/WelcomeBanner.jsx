@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router";
+
 const WelcomeSection = () => {
+  const navigate=useNavigate()
   return (
     <section className="rounded-3xl border border-white/70 p-6 sm:p-8 lg:p-12">
 
@@ -29,11 +32,15 @@ const WelcomeSection = () => {
 
           <div className="mt-7 flex flex-wrap gap-4">
 
-            <button className="rounded-xl bg-[#dfff00] px-6 py-3 text-sm font-semibold text-black transition hover:scale-105">
+            <button onClick={()=>{
+              navigate("/shop")
+            }}className="rounded-xl bg-[#dfff00] px-6 py-3 text-sm font-semibold text-black transition hover:scale-105">
               Shop Now →
             </button>
 
-            <button className="rounded-xl border border-white/50 px-6 py-3 text-sm font-semibold transition hover:bg-white hover:text-black">
+            <button onClick={()=>{
+              navigate("/shop")
+            }} className="rounded-xl border border-white/50 px-6 py-3 text-sm font-semibold transition hover:bg-white hover:text-black">
               View All Products
             </button>
 

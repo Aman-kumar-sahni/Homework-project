@@ -45,7 +45,7 @@ const Register = () => {
     );
 
     if (isUserExists) {
-      setError("Email already registered");
+      setError("User already exist with this Email");
       return;
     }
 

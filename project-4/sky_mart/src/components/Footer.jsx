@@ -1,6 +1,6 @@
-const HomeFooter = () => {
+const Footer = () => {
   return (
-    <footer className="mt-16 border-t border-white/30 py-8 text-center">
+    <footer className="border-t border-white/10 bg-[#0d0d0d] py-8 text-center text-white">
 
       <h2 className="text-2xl font-bold text-[#dfff00]">
         SkyMart
@@ -14,4 +14,4 @@ const HomeFooter = () => {
   );
 };
 
-export default HomeFooter;
+export default Footer;

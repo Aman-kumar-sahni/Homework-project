@@ -71,8 +71,8 @@ const Login = () => {
     <main className="min-h-screen bg-[#151515] text-white">
       <div className="flex min-h-screen flex-col lg:flex-row">
         {/* LEFT SIDE */}
-        <section className="flex w-full flex-col justify-between border-b border-white/10 px-6 py-8 sm:px-10 lg:min-h-screen lg:w-1/2 lg:border-b-0 lg:border-r lg:px-12 xl:px-16">
-
+        {/* LEFT SIDE */}
+        <section className="hidden lg:flex lg:min-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:border-r lg:border-white/10 lg:px-12 lg:py-8 xl:px-16">
 
           {/* ---------------- LOGO ---------------- */}
 
@@ -86,66 +86,66 @@ const Login = () => {
             </div>
 
             <h1 className="text-2xl font-bold tracking-tight">
-              Sky<span className="text-[#eaff00]">Mart</span>
+              Sky
+              <span className="text-[#eaff00]">
+                Mart
+              </span>
             </h1>
 
           </div>
 
-
           {/* ---------------- HERO CONTENT ---------------- */}
 
-          <div className="my-16 max-w-xl lg:my-0">
+          <div className="max-w-xl flex flex-col mb-15">
 
-            <p className="mb-5 text-sm font-bold uppercase tracking-widest text-[#eaff00]">
+            <p className="mb-5 text-sm font-bold uppercase tracking-[0.25em] text-[#eaff00]">
               Welcome Back
             </p>
 
-            <h2 className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl xl:text-6xl">
+            <h2 className="text-5xl font-bold leading-tight xl:text-6xl">
               Shop the future.
               <br />
+
               <span className="text-[#eaff00]">
                 Today.
               </span>
+
             </h2>
 
-            <p className="mt-7 max-w-md text-sm leading-7 text-gray-300 sm:text-base">
-              Thousands of products, lightning-fast delivery, and prices that
-              make your wallet happy.
+            <p className="mt-7 max-w-md text-base leading-7 text-gray-300">
+              Thousands of products, lightning-fast delivery, and prices that make your wallet happy.
             </p>
-
 
             {/* ---------------- STATS ---------------- */}
 
-            <div className="mt-10 grid grid-cols-3 gap-3 sm:gap-5">
+            <div className="mt-12 grid grid-cols-3 gap-5">
 
-              <div className="rounded-2xl border border-white/80 px-3 py-4 text-center sm:px-4 sm:py-5">
-                <h3 className="text-lg font-bold text-[#eaff00] sm:text-xl">
+              <div className="rounded-2xl border border-white/15 bg-white/5 p-5 text-center">
+                <h3 className="text-2xl font-bold text-[#eaff00]">
                   20K+
                 </h3>
 
-                <p className="mt-2 text-xs text-gray-300">
+                <p className="mt-2 text-sm text-gray-400">
                   Products
                 </p>
               </div>
 
-
-              <div className="rounded-2xl border border-white/80 px-3 py-4 text-center sm:px-4 sm:py-5">
-                <h3 className="text-lg font-bold text-[#eaff00] sm:text-xl">
+              <div className="rounded-2xl border border-white/15 bg-white/5 p-5 text-center">
+                <h3 className="text-2xl font-bold text-[#eaff00]">
                   50K+
                 </h3>
 
-                <p className="mt-2 text-xs text-gray-300">
+                <p className="mt-2 text-sm text-gray-400">
                   Users
                 </p>
               </div>
 
-
-              <div className="rounded-2xl border border-white/80 px-3 py-4 text-center sm:px-4 sm:py-5">
-                <h3 className="text-lg font-bold text-[#eaff00] sm:text-xl">
+              <div className="rounded-2xl border border-white/15 bg-white/5 p-5 text-center">
+                <h3 className="text-2xl font-bold text-[#eaff00]">
                   4.9★
                 </h3>
 
-                <p className="mt-2 text-xs text-gray-300">
+                <p className="mt-2 text-sm text-gray-400">
                   Rating
                 </p>
               </div>
@@ -155,31 +155,48 @@ const Login = () => {
           </div>
 
 
-          {/* ---------------- FOOTER ---------------- */}
-
-          <p className="text-sm text-gray-500">
-            © 2025 SkyMart. All rights reserved.
-          </p>
 
         </section>
-
         {/* RIGHT SIDE */}
 
-        <section className="flex w-full flex-1 items-center justify-center px-5 py-12 sm:px-8 lg:min-h-screen lg:w-1/2 lg:px-12">
+        <section className="flex min-h-screen w-full items-center justify-center px-5 py-6 sm:px-8 lg:w-1/2 lg:px-12">
+
           <div className="w-full max-w-md">
-            <div className="rounded-3xl border border-white/10 bg-[#191919] p-6 shadow-2xl sm:p-8">
-              <div className="mb-8">
-                <h2 className="text-2xl font-bold sm:text-3xl">
-                  Sign in
-                </h2>
-                <p className="mt-2 text-sm text-gray-400">
-                  Enter your credentials to continue
 
-                </p>
+            {/* Mobile / Tablet Logo */}
+            <div className="mb-8 flex items-center justify-center gap-3 lg:hidden">
 
-
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#eaff00] text-black">
+                <Zap
+                  size={22}
+                  fill="currentColor"
+                />
               </div>
 
+              <h1 className="text-3xl font-bold tracking-tight">
+                Sky
+                <span className="text-[#eaff00]">
+                  Mart
+                </span>
+              </h1>
+
+            </div>
+
+            {/* Login Card */}
+
+            <div className="rounded-2xl border border-white/10 bg-[#191919] p-5 shadow-xl sm:p-6 lg:p-8">
+
+              <div className="mb-8">
+
+                <h2 className="text-2xl font-bold lg:text-3xl">
+                  Sign in
+                </h2>
+
+                <p className="mt-2 text-sm text-gray-400">
+                  Enter your credentials to continue
+                </p>
+
+              </div>
 
 
 

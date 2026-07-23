@@ -12,7 +12,7 @@ import {
 
 const About = () => {
   return (
-    <main className="min-h-screen bg-[#171719] px-4 py-10 text-white sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-[#0d0d0d] px-4 py-10 text-white sm:px-6 lg:px-8">
       <div className="mx-auto w-full max-w-5xl">
 
         {/* =====================================================
@@ -380,17 +380,7 @@ const About = () => {
           FOOTER
       ====================================================== */}
 
-      <footer className="mt-20 border-t border-white/70 py-8 text-center">
-
-        <h2 className="text-lg font-bold text-[#eaff00]">
-          SkyMart
-        </h2>
-
-        <p className="mt-3 text-xs text-white/60">
-          © 2025 SkyMart • Built with React + Redux + TanStack Query
-        </p>
-
-      </footer>
+    
 
     </main>
   );
