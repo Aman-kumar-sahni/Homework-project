@@ -183,7 +183,7 @@ const ProductToolbar = ({
           {sort !== "featured" && (
             <button
               onClick={() => setSort("featured")}
-              className="flex items-center gap-2 rounded-full border border-pink-500/40 bg-pink-500/10 px-3 py-1 text-xs text-pink-400 transition hover:bg-pink-500/20"
+              className="flex items-center gap-2 rounded-full border border-cyan-500/40 bg-cyan-500/10 px-3 py-1 text-xs text-cyan-400 transition hover:bg-cyan-500/20"
             >
               {sortLabel[sort]}
 
