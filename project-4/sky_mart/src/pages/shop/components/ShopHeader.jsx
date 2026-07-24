@@ -1,4 +1,4 @@
-const ShopHeader = () => {
+const ShopHeader = ({ productCount, category }) => {
   return (
     <section className="mb-7">
 
@@ -7,7 +7,18 @@ const ShopHeader = () => {
       </h1>
 
       <p className="mt-2 text-sm text-white/60">
-        50 products found
+
+        {productCount} Products Found
+
+        {category !== "all" && (
+          <>
+            {" "}
+            <span className="font-medium text-[#eaff00] capitalize">
+              {`in ${category.replace("-", " ")}`}
+            </span>
+          </>
+        )}
+
       </p>
 
     </section>

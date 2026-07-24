@@ -1,303 +1,212 @@
-
-
-const Login = () => {
-
-
-  
-  return (
-    <main className="min-h-screen bg-[#151515] text-white">
-      <div className="flex min-h-screen flex-col lg:flex-row">
-        {/* LEFT SIDE */}
-        <section className="flex w-full flex-col justify-between border-b border-white/10 px-6 py-8 sm:px-10 lg:min-h-screen lg:w-1/2 lg:border-b-0 lg:border-r lg:px-12 xl:px-16">
-
-
-          {/* ---------------- LOGO ---------------- */}
-
-          <div className="flex items-center gap-3">
-
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#eaff00] text-black">
-              <Zap
-                size={22}
-                fill="currentColor"
-              />
-            </div>
-
-            <h1 className="text-2xl font-bold tracking-tight">
-              Sky<span className="text-[#eaff00]">Mart</span>
-            </h1>
-
-          </div>
-
-
-          {/* ---------------- HERO CONTENT ---------------- */}
-
-          <div className="my-16 max-w-xl lg:my-0">
-
-            <p className="mb-5 text-sm font-bold uppercase tracking-widest text-[#eaff00]">
-              Welcome Back
-            </p>
-
-            <h2 className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl xl:text-6xl">
-              Shop the future.
-              <br />
-              <span className="text-[#eaff00]">
-                Today.
-              </span>
-            </h2>
-
-            <p className="mt-7 max-w-md text-sm leading-7 text-gray-300 sm:text-base">
-              Thousands of products, lightning-fast delivery, and prices that
-              make your wallet happy.
-            </p>
-
-
-            {/* ---------------- STATS ---------------- */}
-
-            <div className="mt-10 grid grid-cols-3 gap-3 sm:gap-5">
-
-              <div className="rounded-2xl border border-white/80 px-3 py-4 text-center sm:px-4 sm:py-5">
-                <h3 className="text-lg font-bold text-[#eaff00] sm:text-xl">
-                  20K+
-                </h3>
-
-                <p className="mt-2 text-xs text-gray-300">
-                  Products
-                </p>
-              </div>
-
-
-              <div className="rounded-2xl border border-white/80 px-3 py-4 text-center sm:px-4 sm:py-5">
-                <h3 className="text-lg font-bold text-[#eaff00] sm:text-xl">
-                  50K+
-                </h3>
-
-                <p className="mt-2 text-xs text-gray-300">
-                  Users
-                </p>
-              </div>
-
-
-              <div className="rounded-2xl border border-white/80 px-3 py-4 text-center sm:px-4 sm:py-5">
-                <h3 className="text-lg font-bold text-[#eaff00] sm:text-xl">
-                  4.9★
-                </h3>
-
-                <p className="mt-2 text-xs text-gray-300">
-                  Rating
-                </p>
-              </div>
-
-            </div>
-
-          </div>
-
-
-          {/* ---------------- FOOTER ---------------- */}
-
-          <p className="text-sm text-gray-500">
-            © 2025 SkyMart. All rights reserved.
-          </p>
-
-        </section>
-
-        {/* RIGHT SIDE */}
-
-        <section className="flex w-full flex-1 items-center justify-center px-5 py-12 sm:px-8 lg:min-h-screen lg:w-1/2 lg:px-12">
-          <div className="w-full max-w-md">
-            <div className="rounded-3xl border border-white/10 bg-[#191919] p-6 shadow-2xl sm:p-8">
-              <div className="mb-8">
-                <h2 className="text-2xl font-bold sm:text-3xl">
-                  Sign in
-                </h2>
-                <p className="mt-2 text-sm text-gray-400">
-                  Enter your credentials to continue
-
-                </p>
-
-
-              </div>
-
-
-
-
-              {/* FORM START */}
-
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="mb-4">
-
-
-                  <div className="flex items-center gap-3 rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition focus-within:border-[#eaff00]">
-                    <Mail
-                      size={18}
-                      className="shrink-0 text-gray-400"
-                    />
-                    <input
-
-                      type="email"
-                      onChange={() => setError("")}
-
-                      placeholder="Email address"
-
-                      className="w-full bg-transparent text-sm text-white outline-none placeholder:text-gray-400"
-                      {...register("email", {
-
-                        required:
-                          "Email is required",
-
-
-                        pattern: {
-
-                          value:
-                            /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
-
-                          message:
-                            "Enter a valid email"
-
-                        }
-
-                      })}
-
-                    />
-
-
-
-                  </div>
-                  {errors.email && (
-
-                    <p className="mt-2 text-sm text-red-500">
-
-                      {errors.email.message}
-
-                    </p>
-
-
-                  )}
-
-                </div>
-
-
-
-
-
-                {/* PASSWORD */}
-
-
-                <div className="mb-6">
-                  <div className="flex items-center gap-3 rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition focus-within:border-[#eaff00]">
-                    <LockKeyhole
-                      size={18}
-                      className="shrink-0 text-gray-400"
-                    />
-
-                    <input
-
-                      type="password"
-                      onChange={() => setError("")}
-
-                      placeholder="Password"
-
-                      className="w-full bg-transparent text-sm text-white outline-none placeholder:text-gray-400"
-
-                      {...register("password", {
-
-                        required:
-                          "Password is required"
-
-                      })}
-
-                    />
-                    <Eye
-                      size={18}
-                      className="shrink-0 cursor-pointer text-gray-400 transition hover:text-white"
-                    />
-
-
-                  </div>
-
-
-
-                  {errors.password && (
-
-                    <p className="mt-2 text-sm text-red-500">
-
-                      {errors.password.message}
-
-                    </p>
-
-                  )}
-                  {error && (
-                    <p className="mt-2 text-center text-sm text-red-500">
-                      {error}
-                    </p>
-                  )}
-
-
-
-                </div>
-
-                <button
-                  type="submit"
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#eaff00] py-3.5 font-medium text-black transition hover:bg-[#dfff00] active:scale-[0.98]"
-                >
-
-                  Sign in
-
-                  <ArrowRight
-                    size={18}
-                  />
-
-                </button>
-
-
-
-
-
-                {/* REGISTER LINK */}
-
-                <p className="mt-6 text-center text-sm text-gray-400">
-
-                  Don't have an account?{" "}
-
-                  <NavLink
-
-                    to="/register"
-
-                    className="cursor-pointer font-semibold text-[#eaff00] !no-underline hover:!no-underline"
-
-                  >
-
-                    Create one
-
-                  </NavLink>
-
-
-                </p>
-
-
-
-
-              </form>
-
-              {/* FORM END */}
-
-
-
-            </div>
-
-          </div>
-
-
-        </section>
-
-
-      </div>
-
-
-    </main>
-
-  );
-
-};
-
-
-export default Login;
+// import Footer from "../../components/Footer";
+// import ProductGrid from "./components/ProductGrid";
+// import ProductToolbar from "./components/ProductToolbar";
+// import ShopHeader from "./components/ShopHeader";
+
+
+// const Shop = () => {
+//   const [search, setSearch] = useState("")
+//   return (
+//     <div className="min-h-screen bg-[#0d0d0d] text-white">
+
+//       <main className="mx-auto w-full max-width:[80rem];  px-4 py-12 sm:px-6 lg:px-8">
+
+//         {/* Page Heading */}
+//         <ShopHeader/>
+// <ProductToolbar
+//    search={search}
+//    setSearch={setSearch}
+// />       
+// <ProductGrid
+//    search={search}
+// />                
+
+//       </main>
+
+//       {/* Common Footer */}
+
+//     </div>
+//   );
+// };
+
+// export default Shop; 
+
+// import { Search, ChevronDown } from "lucide-react";
+
+// const ProductToolbar = () => {
+//   return (
+//     <section className="mb-6 rounded-2xl border border-white/70 p-3">
+
+//       <div className="flex flex-col gap-3 lg:flex-row">
+
+//         {/* Search */}
+//         <div className="relative flex-1">
+
+//           <Search
+//             size={16}
+//             className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40"
+//           />
+
+//           <input
+//             type="text"
+//             placeholder="Search products..."
+//             className="
+//               h-11
+//               w-full
+//               rounded-xl
+//               border
+//               border-white/10
+//               bg-[#222222]
+//               pl-11
+//               pr-4
+//               text-sm
+//               text-white
+//               outline-none
+//               placeholder:text-white/40
+//               focus:border-[#eaff00]
+//             "
+//           />
+
+//         </div>
+
+//         {/* Category Filter */}
+//         <div className="relative">
+
+//           <select
+//             className="
+//               h-11
+//               w-full
+//               min-w-[180px]
+//               appearance-none
+//               rounded-xl
+//               border
+//               border-white/10
+//               bg-[#222222]
+//               px-4
+//               pr-10
+//               text-sm
+//               text-white
+//               outline-none
+//               focus:border-[#eaff00]
+//             "
+//           >
+//             <option>All Categories</option>
+//             <option>Beauty</option>
+//             <option>Fragrances</option>
+//             <option>Furniture</option>
+//             <option>Groceries</option>
+//             <option>Home-decoration</option>
+//             <option>Kitchen-accessories</option>
+//           </select>
+
+//           <ChevronDown
+//             size={16}
+//             className="
+//               pointer-events-none
+//               absolute
+//               right-4
+//               top-1/2
+//               -translate-y-1/2
+//               text-white/50
+//             "
+//           />
+
+//         </div>
+
+//         {/* Sort Filter */}
+//         <div className="relative">
+
+//           <select
+//             className="
+//               h-11
+//               w-full
+//               min-w-[150px]
+//               appearance-none
+//               rounded-xl
+//               border
+//               border-white/10
+//               bg-[#222222]
+//               px-4
+//               pr-10
+//               text-sm
+//               text-white
+//               outline-none
+//               focus:border-[#eaff00]
+//             "
+//           >
+//             <option>Featured</option>
+//             <option>Price: Low to High</option>
+//             <option>Price: High to Low</option>
+//             <option>Top Rated</option>
+//           </select>
+
+//           <ChevronDown
+//             size={16}
+//             className="
+//               pointer-events-none
+//               absolute
+//               right-4
+//               top-1/2
+//               -translate-y-1/2
+//               text-white/50
+//             "
+//           />
+
+//         </div>
+
+//       </div>
+
+//     </section>
+//   );
+// };
+
+// export default ProductToolbar;   isko v pdho 
+// import { useContext, useEffect } from "react";
+// import ProductCard from "./ProductCard";
+// import axios from "axios";
+// import { MyContext } from "../../../context/MyContext";
+
+
+
+ 
+
+// const ProductGrid = () => {
+//  const {product,setProduct} =useContext(MyContext)
+//   const getProducts = async () => {
+//   try {
+//     const res = await axios.get(
+//       "https://dummyjson.com/products?limit=60"
+//     );
+
+//     const updatedProducts = res.data.products.map((product) => ({
+//       ...product,
+//       reviewCount: Math.floor(Math.random() * 900) + 100, // 100 - 999
+//     }));
+
+//     setProduct(updatedProducts);
+//   } catch (err) {
+//     console.log(err.message);
+//   }
+// };
+// useEffect(()=>{getProducts()},[])
+
+
+//   return (
+//     <section
+//       className="
+//         grid
+//         grid-cols-1
+//         gap-4
+//         sm:grid-cols-2
+//         lg:grid-cols-3
+//         xl:grid-cols-5
+//       "
+//     >
+//       {product.map((elem)=>{
+//         return <ProductCard product={elem} key={elem.id} />
+//       })}
+//     </section>
+//   );
+// };
+
+// export default ProductGrid;  isko v pdho   aur ab wapis 3no file modify kr k do code update do responsive nhi tutna chahiye

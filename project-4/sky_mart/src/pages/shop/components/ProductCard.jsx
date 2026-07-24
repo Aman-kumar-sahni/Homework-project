@@ -1,6 +1,11 @@
 import { ShoppingCart } from "lucide-react";
-
+import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 const ProductCard = ({ product }) => {
+  const fullStars = Math.floor(product.rating);
+
+const hasHalfStar = product.rating % 1 >= 0.5;
+
+const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
   return (
     <article
       className="
@@ -40,7 +45,7 @@ const ProductCard = ({ product }) => {
         </span>
 
         <img
-          src={product.image}
+          src={product.thumbnail}
           alt={product.title}
           className="
             h-full
@@ -74,26 +79,41 @@ const ProductCard = ({ product }) => {
           {product.title}
         </h2>
 
-        {/* Rating */}
-        <div className="mt-2 flex items-center gap-1">
+        
+      <div className="mt-2 flex items-center gap-1">
 
-          <span className="text-[12px] tracking-tight text-[#eaff00]">
-            {"★".repeat(Math.floor(product.rating))}
-          </span>
+  {[...Array(fullStars)].map((_, index) => (
+    <FaStar
+      key={`full-${index}`}
+      className="text-[12px] text-[#eaff00]"
+    />
+  ))}
 
-          <span className="text-[10px] text-white/45">
-            ({product.reviews})
-          </span>
+  {hasHalfStar && (
+    <FaStarHalfAlt
+      className="text-[12px] text-[#eaff00]"
+    />
+  )}
 
-        </div>
+  {[...Array(emptyStars)].map((_, index) => (
+    <FaRegStar
+      key={`empty-${index}`}
+      className="text-[12px] text-white/30"
+    />
+  ))}
 
+  <span className="ml-1 text-[10px] text-white/45">
+    ({product.reviewCount})
+  </span>
+
+</div>
         <div className="my-2 border-t border-white/30" />
 
         {/* Price + Cart */}
         <div className="mt-auto flex items-center justify-between gap-2">
 
           <span className="text-lg font-bold text-[#eaff00]">
-            {product.price}
+          { `$${product.price}`}
           </span>
 
           <button

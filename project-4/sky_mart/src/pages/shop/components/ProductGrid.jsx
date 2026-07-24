@@ -1,137 +1,122 @@
+import { useContext, useEffect } from "react";
+import axios from "axios";
 import ProductCard from "./ProductCard";
+import { MyContext } from "../../../context/MyContext";
 
-const products = [
-  {
-    id: 1,
-    title: "Wireless Bluetooth Headphones",
-    category: "Electronics",
-    price: "$99.99",
-    rating: 4.5,
-    reviews: 120,
-    image:
-      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600",
-  },
+const ProductGrid = ({
+  search,
+  category,
+  sort,
+  setProductCount,
+}) => {
+  const { product, setProduct } = useContext(MyContext);
 
-  {
-    id: 2,
-    title: "Smart Watch Series 5",
-    category: "Electronics",
-    price: "$299.99",
-    rating: 4.5,
-    reviews: 85,
-    image:
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600",
-  },
+  // ================= Fetch Products =================
 
-  {
-    id: 3,
-    title: "Comfortable Cotton T-Shirt",
-    category: "Clothing",
-    price: "$24.99",
-    rating: 4.5,
-    reviews: 200,
-    image:
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600",
-  },
+  const getProducts = async () => {
+    try {
+      const res = await axios.get(
+        "https://dummyjson.com/products?limit=60"
+      );
 
-  {
-    id: 4,
-    title: "Ergonomic Office Chair",
-    category: "Furniture",
-    price: "$199.99",
-    rating: 5,
-    reviews: 65,
-    image:
-      "https://images.unsplash.com/photo-1580480055273-228ff5388ef8?w=600",
-  },
+      const updatedProducts = res.data.products.map((item) => ({
+        ...item,
+        reviewCount: Math.floor(Math.random() * 900) + 100,
+      }));
 
-  {
-    id: 5,
-    title: "Stainless Steel Water Bottle",
-    category: "Home",
-    price: "$34.99",
-    rating: 4.5,
-    reviews: 150,
-    image:
-      "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600",
-  },
+      setProduct(updatedProducts);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
-  {
-    id: 6,
-    title: "Modern Desk Lamp",
-    category: "Home",
-    price: "$49.99",
-    rating: 4,
-    reviews: 90,
-    image:
-      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=600",
-  },
+  useEffect(() => {
+    getProducts();
+  }, []);
 
-  {
-    id: 7,
-    title: "Running Sports Shoes",
-    category: "Sports",
-    price: "$79.99",
-    rating: 4.5,
-    reviews: 110,
-    image:
-      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600",
-  },
+  // ================= Search + Category =================
 
-  {
-    id: 8,
-    title: "Leather Backpack",
-    category: "Accessories",
-    price: "$89.99",
-    rating: 4,
-    reviews: 70,
-    image:
-      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600",
-  },
+  const keyword = search.trim().toLowerCase();
 
-  {
-    id: 9,
-    title: "Wireless Keyboard",
-    category: "Electronics",
-    price: "$59.99",
-    rating: 4.5,
-    reviews: 100,
-    image:
-      "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600",
-  },
+  const filteredProducts = product.filter((item) => {
+    const matchSearch =
+      item.title.toLowerCase().includes(keyword) ||
+      item.category.toLowerCase().includes(keyword);
 
-  {
-    id: 10,
-    title: "Minimalist Coffee Table",
-    category: "Furniture",
-    price: "$149.99",
-    rating: 4,
-    reviews: 55,
-    image:
-      "https://images.unsplash.com/photo-1532372320572-cda25653a26d?w=600",
-  },
-];
+    const matchCategory =
+      category === "all" ||
+      item.category === category;
 
-const ProductGrid = () => {
+    return matchSearch && matchCategory;
+  });
+
+  // ================= Sort =================
+
+  const displayedProducts = [...filteredProducts];
+
+  switch (sort) {
+    case "low":
+      displayedProducts.sort((a, b) => a.price - b.price);
+      break;
+
+    case "high":
+      displayedProducts.sort((a, b) => b.price - a.price);
+      break;
+
+    case "rating":
+      displayedProducts.sort((a, b) => b.rating - a.rating);
+      break;
+
+    default:
+      break;
+  }
+
+  // ================= Product Count =================
+
+  useEffect(() => {
+    setProductCount(displayedProducts.length);
+  }, [displayedProducts.length, setProductCount]);
+
+  // ================= UI =================
+
   return (
-    <section
-      className="
-        grid
-        grid-cols-1
-        gap-4
-        sm:grid-cols-2
-        lg:grid-cols-3
-        xl:grid-cols-5
-      "
-    >
-      {products.map((product) => (
-        
-        <ProductCard
-          key={product.id}
-          product={product}
-        />
-      ))}
-    </section>
+    <>
+      {displayedProducts.length > 0 ? (
+        <section
+          className="
+            grid
+            grid-cols-1
+            gap-4
+            sm:grid-cols-2
+            lg:grid-cols-3
+            xl:grid-cols-5
+          "
+        >
+          {displayedProducts.map((item) => (
+            <ProductCard
+              key={item.id}
+              product={item}
+            />
+          ))}
+        </section>
+      ) : (
+        <section className="flex min-h-[300px] items-center justify-center">
+
+          <div className="text-center">
+
+            <h2 className="text-2xl font-semibold text-white">
+              No Products Found
+            </h2>
+
+            <p className="mt-2 text-sm text-white/50">
+              Try changing your search or filters.
+            </p>
+
+          </div>
+
+        </section>
+      )}
+    </>
   );
 };
 
