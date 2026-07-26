@@ -1,11 +1,8 @@
-// src/pages/Home.jsx
-
-
-import HeroSection from "./components/HeroSection";
-import StatsSection from "./components/StatsSection";
-import CategorySection from "./components/CategorySection";
-import ProductShowcaseSection from "./components/ProductShowcaseSection";
-import FeaturesSection from "./components/FeaturesSection";
+import CategorySection from "../../features/home/presentation/components/CategorySection";
+import FeaturesSection from "../../features/home/presentation/components/FeatureSection";
+import HeroSection from "../../features/home/presentation/components/HeroSection";
+import ProductShowcaseSection from "../../features/home/presentation/components/ProductShowcaseSection";
+import StatsSection from "../../features/home/presentation/components/StatsSection";
 
 const Home = () => {
   return (
@@ -18,13 +15,13 @@ const Home = () => {
       <div className="mx-auto max-w-7xl space-y-10 px-4 py-20  sm:px-6 lg:px-8">
 
         {/* Hero Banner */}
-        <HeroSection />
+        <HeroSection/>
 
         {/* Statistics Cards */}
-        <StatsSection />
+        <StatsSection/>
 
         {/* Shop By Category */}
-        <CategorySection />
+        <CategorySection/>
 
         {/* Top Rated + New Arrivals */}
         <ProductShowcaseSection />

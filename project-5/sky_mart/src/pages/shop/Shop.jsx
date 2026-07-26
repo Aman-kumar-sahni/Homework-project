@@ -1,6 +1,7 @@
-import ProductGrid from "./shop/ProductGrid";
-import SearchBar from "./shop/SearchBar";
-import ShopHeader from "./shop/ShopHeader";
+import ProductGrid from "../../features/shop/presentation/components/ProductGrid";
+import SearchBar from "../../features/shop/presentation/components/SearchBar";
+import ShopHeader from "../../features/shop/presentation/components/ShopHeader";
+
 
 const Shop = () => {
   return (

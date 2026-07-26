@@ -16,7 +16,7 @@ const ProductGrid = () => {
         "
       >
         {Array.from({ length: 10 }).map((_, index) => (
-          <ProductCard key={index} />
+          <ProductCard key = {index}/>
         ))}
       </div>
     </section>
