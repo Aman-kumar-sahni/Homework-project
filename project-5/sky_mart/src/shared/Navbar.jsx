@@ -7,11 +7,17 @@ import {
 } from "lucide-react";
 
 import { useState } from "react";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
+import { toast } from "react-toastify";
 const Navbar = () => {
+  const navigate = useNavigate()
 
   const [open, setOpen] = useState(false);
-
+function logout(){
+  localStorage.removeItem("currentUser")
+  toast.success("Logout successfull")
+  navigate("login")
+}
 
   return (
     <header className="fixed left-0 top-0 z-50 w-full border-b border-white/10 bg-[#0d0d0d] text-white">
@@ -45,8 +51,8 @@ const Navbar = () => {
 
         <div className="hidden items-center gap-7 text-sm font-medium text-gray-500 md:flex">
 
-          {/* <NavLink
-            to="/home"
+          <NavLink
+            to="home"
             className={({ isActive }) =>
               `transition hover:text-amber-50 ${isActive ? "text-[#eaff00]" : ""
               }`
@@ -57,7 +63,7 @@ const Navbar = () => {
 
 
           <NavLink
-            to="/shop"
+            to="shop"
             className={({ isActive }) =>
               `transition hover:text-amber-50 ${isActive ? "text-[#eaff00]" : ""
               }`
@@ -68,28 +74,15 @@ const Navbar = () => {
 
 
           <NavLink
-            to="/about"
+            to="about"
             className={({ isActive }) =>
               `transition hover:text-amber-50 ${isActive ? "text-[#eaff00]" : ""
               }`
             }
           >
             About
-          </NavLink> */}
-                        <a className="text-[#eaff00]">
-                Home
-              </a>
-
-
-              <a className="hover:text-[#eaff00]">
-                Shop
-              </a>
-
-
-              <a className="hover:text-[#eaff00]">
-                About
-              </a>
-
+          </NavLink>
+             
         </div>
 
 
@@ -130,6 +123,10 @@ const Navbar = () => {
           {/* LOGOUT */}
 
           <button
+          onClick={()=>{
+            logout()
+
+          }}
             className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-gray-300 transition-all duration-200 hover:border-red-500 hover:bg-red-500/10 hover:text-red-500"
           >
             <LogOut size={19} />

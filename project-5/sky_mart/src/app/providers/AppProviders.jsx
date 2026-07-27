@@ -1,11 +1,19 @@
-import React from 'react'
+import { createContext, useState } from "react";
 
-const AppProviders = () => {
+export const AuthContext = createContext();
+
+const AuthProvider = ({ children }) => {
+    const [registered, setRegisterUser] = useState(JSON.parse(localStorage.getItem("registerUser"))||[])
+ 
+
+
   return (
-    <div>
-      App provider
-    </div>
-  )
-}
+    <AuthContext.Provider
+      value={{ registered,setRegisterUser }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
-export default AppProviders
+export default AuthProvider;

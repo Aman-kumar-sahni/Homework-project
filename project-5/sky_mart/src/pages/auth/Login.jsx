@@ -5,7 +5,47 @@ import {
   Eye,
   ArrowRight,
 } from "lucide-react";
+import { useContext, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import { AuthContext } from "../../app/providers/AppProviders";
+import { toast } from "react-toastify";
 const Login = () => {
+  const { registered} = useContext(AuthContext)
+
+  const [error, setError] = useState(null);
+  
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    reset,
+  } = useForm({ mode: "onChange" });
+
+  const navigate = useNavigate();
+
+  function submitHandler(data) {
+    const user = registered.find(
+      (val) =>
+        val.email === data.email &&
+        val.password === data.password
+    );
+
+    if (!user) {
+      setError("Invalid credential");
+      return;
+    }
+
+    setError(null);
+    reset(); // Form reset
+
+toast.success("Login SuccessFull");
+localStorage.setItem("currentUser",JSON.stringify(user))
+    navigate("/")
+
+  }
   return (
     <div className="min-h-screen bg-[#111111] text-white">
       <div className="grid min-h-screen lg:grid-cols-2">
@@ -17,13 +57,13 @@ const Login = () => {
           {/* Background Glow */}
           <div className="absolute left-10  top-40 h-[420px] w-[420px] rounded-full bg-lime-400/10 blur-[140px]" />
 
-      <div className="relative z-10 flex h-full w-full flex-col justify-between px-14 pt-4 pb-14 xl:px-16 xl:pt-6 xl:pb-16">
+          <div className="relative z-10 flex h-full w-full flex-col justify-between px-14 pt-4 pb-14 xl:px-16 xl:pt-6 xl:pb-16">
 
             {/* Logo */}
 
             <div className="flex items-center gap-3 ">
 
-              <div  className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#E8FF28] shadow-[0_0_18px_rgba(232,255,40,.35)]">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#E8FF28] shadow-[0_0_18px_rgba(232,255,40,.35)]">
 
                 <Zap
                   size={20}
@@ -49,7 +89,7 @@ const Login = () => {
 
             {/* Hero */}
 
-            <div  className="max-w-[560px] mt-20 ">
+            <div className="max-w-[560px] mt-20 ">
 
               <p className="mb-2 text-sm font-bold uppercase tracking-[4px] text-[#E8FF28]">
 
@@ -193,11 +233,13 @@ const Login = () => {
 
               {/* Form */}
 
-              <div className="mt-8 space-y-5">
+              <form onSubmit={handleSubmit(submitHandler)} className="mt-6 space-y-3">
 
                 {/* Email */}
+                {error && <div className="flex h-[45px] items-center rounded-2xl font-bold justify-center items-center  text-red-500 border border-[#5c5353] bg-[#926b6b] px-5 transition-all duration-300 focus-within:border-[#E8FF28] focus-within:shadow-[0_0_10px_rgba(232,255,40,.25)]">{error}</div>}
 
-                <div className="flex h-[58px] items-center rounded-2xl border border-[#555555] bg-[#2B2B2B] px-5 transition-all duration-300 focus-within:border-[#E8FF28] focus-within:shadow-[0_0_10px_rgba(232,255,40,.25)]">
+
+                <div className="flex h-[45px] items-center rounded-2xl border border-[#555555] bg-[#2B2B2B] px-5 transition-all duration-300 focus-within:border-[#E8FF28] focus-within:shadow-[0_0_10px_rgba(232,255,40,.25)]">
 
                   <Mail
                     size={18}
@@ -205,16 +247,32 @@ const Login = () => {
                   />
 
                   <input
+                    {...register("email", {
+                      onChange: (() => { setError(null) }),
+                      required: "Email is required",
+                      pattern: {
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: "Enter a valid email address",
+                      },
+                    })}
                     type="email"
                     placeholder="Email address"
                     className="ml-3 w-full bg-transparent text-[15px] text-white placeholder:text-zinc-400 outline-none"
                   />
 
+
                 </div>
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-500">
+                    {errors.email.message}
+                  </p>
+                )}
+
 
                 {/* Password */}
 
-                <div className="flex h-[58px] items-center rounded-2xl border border-[#555555] bg-[#2B2B2B] px-5 transition-all duration-300 focus-within:border-[#E8FF28] focus-within:shadow-[0_0_10px_rgba(232,255,40,.25)]">
+
+                <div className="flex h-[45px] items-center rounded-2xl border border-[#555555] bg-[#2B2B2B] px-5 transition-all duration-300 focus-within:border-[#E8FF28] focus-within:shadow-[0_0_10px_rgba(232,255,40,.25)]">
 
                   <Lock
                     size={18}
@@ -222,10 +280,29 @@ const Login = () => {
                   />
 
                   <input
+                    {...register("password", {
+                      onChange: (() => { setError(null) }),
+
+                      required: "Password is required",
+                      minLength: {
+                        value: 6,
+                        message: "Password must be at least 6 characters",
+                      },
+                      maxLength: {
+                        value: 20,
+                        message: "Password cannot exceed 20 characters",
+                      },
+                      pattern: {
+                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/,
+                        message:
+                          "Password must contain at least one uppercase letter, one lowercase letter, and one number",
+                      },
+                    })}
                     type="password"
                     placeholder="Password"
                     className="ml-3 w-full bg-transparent text-[15px] text-white placeholder:text-zinc-400 outline-none"
                   />
+
 
                   <Eye
                     size={18}
@@ -233,11 +310,16 @@ const Login = () => {
                   />
 
                 </div>
+                {errors.password && (
+                  <p className="mt-1 text-sm text-red-500">
+                    {errors.password.message}
+                  </p>
+                )}
 
                 {/* Button */}
 
                 <button
-                  className="mt-1 flex h-[58px] w-full items-center justify-center gap-3 rounded-2xl bg-[#E8FF28] text-lg font-semibold text-black shadow-[0_0_22px_rgba(232,255,40,.45)] transition-all duration-300 hover:shadow-[0_0_35px_rgba(232,255,40,.7)]"
+                  className="mt-4 flex h-[45px] w-full items-center justify-center gap-3 rounded-2xl bg-[#E8FF28] text-lg font-semibold text-black shadow-[0_0_22px_rgba(232,255,40,.45)] transition-all duration-300 hover:shadow-[0_0_35px_rgba(232,255,40,.7)]"
                 >
                   Sign in
 
@@ -250,7 +332,9 @@ const Login = () => {
 
                   Don't have an account?{" "}
 
-                  <span className="cursor-pointer font-semibold text-[#E8FF28] ">
+                  <span onClick={() => {
+                    navigate("/register")
+                  }} className="cursor-pointer font-semibold text-[#E8FF28] ">
 
                     Create one
 
@@ -258,7 +342,7 @@ const Login = () => {
 
                 </p>
 
-              </div>
+              </form>
 
             </div>
 
