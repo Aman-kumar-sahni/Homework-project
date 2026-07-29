@@ -5,47 +5,16 @@ import {
   Eye,
   ArrowRight,
 } from "lucide-react";
-import { useContext, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
-import { AuthContext } from "../../app/providers/AppProviders";
 import { toast } from "react-toastify";
+import useAuth from "../../features/auth/presentation/hooks/useAuth";
+
 const Login = () => {
-  const { registered} = useContext(AuthContext)
+  const { register, hadnleSubmit, errors, watch, reset, loginSubmitHandler, navigate, loginError, setLoginError, handleSubmit } = useAuth()
 
-  const [error, setError] = useState(null);
-  
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    watch,
-    reset,
-  } = useForm({ mode: "onChange" });
 
-  const navigate = useNavigate();
 
-  function submitHandler(data) {
-    const user = registered.find(
-      (val) =>
-        val.email === data.email &&
-        val.password === data.password
-    );
 
-    if (!user) {
-      setError("Invalid credential");
-      return;
-    }
-
-    setError(null);
-    reset(); // Form reset
-
-toast.success("Login SuccessFull");
-localStorage.setItem("currentUser",JSON.stringify(user))
-    navigate("/")
-
-  }
   return (
     <div className="min-h-screen bg-[#111111] text-white">
       <div className="grid min-h-screen lg:grid-cols-2">
@@ -233,10 +202,10 @@ localStorage.setItem("currentUser",JSON.stringify(user))
 
               {/* Form */}
 
-              <form onSubmit={handleSubmit(submitHandler)} className="mt-6 space-y-3">
+              <form onSubmit={handleSubmit(loginSubmitHandler)} className="mt-6 space-y-3">
 
                 {/* Email */}
-                {error && <div className="flex h-[45px] items-center rounded-2xl font-bold justify-center items-center  text-red-500 border border-[#5c5353] bg-[#926b6b] px-5 transition-all duration-300 focus-within:border-[#E8FF28] focus-within:shadow-[0_0_10px_rgba(232,255,40,.25)]">{error}</div>}
+                {loginError && <div className="flex h-[45px] items-center rounded-2xl font-bold justify-center items-center  text-red-500 border border-[#5c5353] bg-[#926b6b] px-5 transition-all duration-300 focus-within:border-[#E8FF28] focus-within:shadow-[0_0_10px_rgba(232,255,40,.25)]">{loginError}</div>}
 
 
                 <div className="flex h-[45px] items-center rounded-2xl border border-[#555555] bg-[#2B2B2B] px-5 transition-all duration-300 focus-within:border-[#E8FF28] focus-within:shadow-[0_0_10px_rgba(232,255,40,.25)]">
@@ -248,7 +217,7 @@ localStorage.setItem("currentUser",JSON.stringify(user))
 
                   <input
                     {...register("email", {
-                      onChange: (() => { setError(null) }),
+                      onChange: (() => { setLoginError(null) }),
                       required: "Email is required",
                       pattern: {
                         value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -281,7 +250,7 @@ localStorage.setItem("currentUser",JSON.stringify(user))
 
                   <input
                     {...register("password", {
-                      onChange: (() => { setError(null) }),
+                      onChange: (() => { setLoginError(null) }),
 
                       required: "Password is required",
                       minLength: {

@@ -6,46 +6,13 @@ import {
   User,
   Zap,
 } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { Navigate, useNavigate } from "react-router";
-import { useContext, useState } from "react";
-import { AuthContext } from "../../app/providers/AppProviders";
 import { toast } from "react-toastify";
+import useAuth from "../../features/auth/presentation/hooks/useAuth";
 const Register = () => {
-
-  const { registered, setRegisterUser } = useContext(AuthContext)
-const [error,setError]=useState(null)
-  const navigate = useNavigate()
-
-  const { register, handleSubmit, formState: { errors }, watch, reset } = useForm({ mode: "onChange" })
-
-  function submitHandler(data) {
-    
-
-    const user = registered.find(
-      (val) =>
-        val.email === data.email 
-    );
-    if(user){
-      return setError("user already exist with this email")
-    }
-    setError(null)
-      const newUser = {
-    id: Date.now(), 
-    ...data,
-  };
+  const { registerError, setRegisterError, registered, setRegisterUser, register, handleSubmit, errors, watch, reset, registerSubmitHandler, navigate } = useAuth()
 
 
-        let registerUser = [...registered, data]
 
-    setRegisterUser(registerUser)
-    localStorage.setItem("registerUser", JSON.stringify(registerUser))
-    reset()
-    localStorage.setItem("currentUser",JSON.stringify(newUser))
-toast.success("Account Created Successfully");
-    navigate("/")
-
-  }
   const password = watch("password");
 
 
@@ -98,7 +65,7 @@ toast.success("Account Created Successfully");
 
         {/* ================= Register Card ================= */}
 
-        <form onSubmit={handleSubmit(submitHandler)} className="rounded-3xl border border-[#4A4A4A] bg-[#1B1B1B] p-6 shadow-[0_0_25px_rgba(255,255,255,.03)]">
+        <form onSubmit={handleSubmit(registerSubmitHandler)} className="rounded-3xl border border-[#4A4A4A] bg-[#1B1B1B] p-6 shadow-[0_0_25px_rgba(255,255,255,.03)]">
 
           {/* Heading */}
 
@@ -133,7 +100,7 @@ toast.success("Account Created Successfully");
 
               <input
                 {...register("name", {
-                                    onChange:()=>{         setError(null)       },
+                  onChange: () => { setRegisterError(null) },
 
                   required: "Name is required",
                   minLength: {
@@ -188,7 +155,7 @@ toast.success("Account Created Successfully");
 
               <input
                 {...register("email", {
-                                    onChange:()=>{         setError(null)       },
+                  onChange: () => { setRegisterError(null) },
 
                   required: "Email is required",
                   pattern: {
@@ -227,25 +194,25 @@ toast.success("Account Created Successfully");
 
               <input
 
-                {...register("password", 
+                {...register("password",
                   {
-                                      onChange:()=>{         setError(null)       },
+                    onChange: () => { setRegisterError(null) },
 
-                  required: "Password is required",
-                  minLength: {
-                    value: 6,
-                    message: "Password must be at least 6 characters",
-                  },
-                  maxLength: {
-                    value: 20,
-                    message: "Password cannot exceed 20 characters",
-                  },
-                  pattern: {
-                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/,
-                    message:
-                      "Password must contain at least one uppercase letter, one lowercase letter, and one number",
-                  },
-                })}
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters",
+                    },
+                    maxLength: {
+                      value: 20,
+                      message: "Password cannot exceed 20 characters",
+                    },
+                    pattern: {
+                      value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/,
+                      message:
+                        "Password must contain at least one uppercase letter, one lowercase letter, and one number",
+                    },
+                  })}
                 type="password"
                 placeholder="Password (min 6 chars)"
                 className="ml-3 w-full bg-transparent text-[15px] text-white outline-none placeholder:text-zinc-400"
@@ -277,9 +244,9 @@ toast.success("Account Created Successfully");
                 className="text-zinc-400"
               />
 
-              <input 
+              <input
                 {...register("confirmPassword", {
-                  onChange:()=>{         setError(null)       },
+                  onChange: () => { setRegisterError(null) },
                   required: "Please confirm your password",
                   validate: (value) =>
                     value === password || "Passwords do not match",
@@ -298,8 +265,8 @@ toast.success("Account Created Successfully");
                 {errors.confirmPassword.message}
               </p>
             )}
-            {error&&              <p className="mt-1  text-sm text-red-500">{error}</p>
-}
+            {registerError && <p className="mt-1  text-sm text-red-500">{registerError}</p>
+            }
             <button
               className="
                 mt-1

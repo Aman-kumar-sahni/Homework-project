@@ -2,8 +2,9 @@ import ProductGrid from "../../features/shop/presentation/components/ProductGrid
 import SearchBar from "../../features/shop/presentation/components/SearchBar";
 import ShopHeader from "../../features/shop/presentation/components/ShopHeader";
 
-
+import axios from "axios"
 const Shop = () => {
+ 
   return (
     <section
       className="
@@ -24,7 +25,7 @@ const Shop = () => {
           <SearchBar />
         </div>
 
-        <ProductGrid />
+        <ProductGrid  />
       </main>
     </section>
   );
