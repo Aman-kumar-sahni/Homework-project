@@ -4,12 +4,14 @@ export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
     const [registered, setRegisterUser] = useState(JSON.parse(localStorage.getItem("registerUser"))||[])
- 
+ const  [products,setProducts]=useState([])
+  const [allProducts,setAllProducts]=useState([])
+  const [category, setCategory] = useState("All Categories");
 
 
   return (
     <AuthContext.Provider
-      value={{ registered,setRegisterUser }}
+      value={{ registered,setRegisterUser,products,setProducts,allProducts,setAllProducts,category,setCategory }}
     >
       {children}
     </AuthContext.Provider>

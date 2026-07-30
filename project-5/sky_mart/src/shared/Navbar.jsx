@@ -11,6 +11,7 @@ import { NavLink, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 const Navbar = () => {
   const navigate = useNavigate()
+ const user =  JSON.parse(localStorage.getItem("currentUser"))
 
   const [open, setOpen] = useState(false);
 function logout(){
@@ -96,13 +97,12 @@ function logout(){
           <div className="hidden max-w-[180px] items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 md:flex">
 
             <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#eaff00] text-xs font-bold text-black">
-              A
+{user?.name?.charAt(0).toUpperCase()}
             </div>
 
-            <span className="truncate text-sm font-medium">
-              Aman
-            </span>
-
+           <span className="inline-block w-40 truncate text-sm font-medium">
+  {user?.name}
+</span>
           </div>
 
 

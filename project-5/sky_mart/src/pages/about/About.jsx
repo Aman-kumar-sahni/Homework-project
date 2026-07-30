@@ -10,6 +10,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useNavigate } from "react-router";
+
 const About = () => {
   const navigate = useNavigate()
   return (

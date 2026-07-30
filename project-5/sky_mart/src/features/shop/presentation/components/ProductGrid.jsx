@@ -1,22 +1,24 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 import axios from "axios"
 import { nanoid } from "nanoid";
+import { axiosInstance } from "../../application/productApi";
+import { AuthContext } from "../../../../app/providers/AppProviders";
 
 const ProductGrid = () => {
-const  [products,setProducts]=useState([])
-const[loading,setLoading]=useState([])
-
+const[loading,setLoading]=useState(true)
+const {products,setProducts,setAllProducts}=useContext(AuthContext)
 const getProducts=async ()=>{
   
   try {
- const res =  await axios.get("https://dummyjson.com/products?limit=60")
+ const res =  await axiosInstance.get("/products?limit=60")
   const updateProducts= res.data.products.map((elem)=>({
     ...elem,id:nanoid(),
             reviewCount: Math.floor(Math.random() * 900) + 100,
   })
 )
   setProducts(updateProducts)
+  setAllProducts(updateProducts)
   setLoading(false)
 
 }catch(error){

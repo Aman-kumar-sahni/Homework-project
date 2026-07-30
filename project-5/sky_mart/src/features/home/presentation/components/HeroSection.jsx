@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router";
 
 const HeroSection = () => {
+ const user =  JSON.parse(localStorage.getItem("currentUser"))
 
+const navigate =useNavigate()
   return (
     <section className="rounded-3xl border border-white/70 p-6 sm:p-8 lg:p-12">
 
@@ -17,7 +20,7 @@ const HeroSection = () => {
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             Welcome back,
             <span className="block text-[#dfff00]">
-                Aman
+                {user.name.split(" ")[0]}
             </span>
           </h1>
 
@@ -31,11 +34,14 @@ const HeroSection = () => {
 
           <div className="mt-7 flex flex-wrap gap-4">
 
-            <button className="rounded-xl bg-[#dfff00] px-6 py-3 text-sm font-semibold text-black transition hover:scale-105">
+            <button  onClick={()=>{
+              navigate("/shop")
+            }}className="rounded-xl bg-[#dfff00] px-6 py-3 text-sm font-semibold text-black transition hover:scale-105">
               Shop Now →
             </button>
 
-            <button className="rounded-xl border border-white/50 px-6 py-3 text-sm font-semibold transition hover:bg-white hover:text-black">
+            <button onClick={()=>{              navigate("/shop")
+}} className="rounded-xl border border-white/50 px-6 py-3 text-sm font-semibold transition hover:bg-white hover:text-black">
               View All Products
             </button>
 
