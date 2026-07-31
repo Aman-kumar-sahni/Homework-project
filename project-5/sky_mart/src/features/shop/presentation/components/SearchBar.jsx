@@ -29,9 +29,7 @@ const SearchBar = () => {
       );
     }
 
-    if (featured === "Newest") {
-      result.sort((a, b) => b.id - a.id);
-    }
+    
     if (featured === "Price: Low -> High") {
       result.sort((a, b) => a.price - b.price);
     }
@@ -40,8 +38,11 @@ const SearchBar = () => {
       result.sort((a, b) => b.price - a.price);
     }
 
-    if (featured === "Rating") {
+    if (featured === "High Rated") {
       result.sort((a, b) => b.rating - a.rating);
+    }
+    if (featured === "Low Rated") {
+      result.sort((a, b) => a.rating - b.rating);
     }
 
     setProducts(result);
@@ -155,10 +156,11 @@ const SearchBar = () => {
               "
             >
               <option value="Featured">Featured</option>
-              <option value="Newest">Newest</option>
               <option value="Price: Low -> High">Price: Low → High</option>
               <option value="Price: High -> Low">Price: High → Low</option>
-              <option value="Rating">Rating</option>
+              <option value="High Rated">HighRated</option>
+              <option value="Low Rated">Low Rated</option>
+
             </select>
 
             <ChevronDown
@@ -183,10 +185,10 @@ const SearchBar = () => {
       setFeatured("Featured");
     }}
     type="button"
-    className="flex h-11 shrink-0 items-center justify-center gap-1.5 rounded-xl border border-zinc-700 bg-[#1A1A1A] px-4 text-sm font-medium text-red-500"
+    className="flex h-11 shrink-0 items-center cursor-pointer justify-center gap-1.5 rounded-xl border border-zinc-700 bg-[#1A1A1A] px-4 text-sm font-medium text-red-500"
   >
     Clear
-    <X size={14} />
+    <X  size={14} />
   </button>
 )}
         </div>

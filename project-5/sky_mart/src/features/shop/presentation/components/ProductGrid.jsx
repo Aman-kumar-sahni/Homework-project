@@ -14,6 +14,7 @@ const getProducts=async ()=>{
  const res =  await axiosInstance.get("/products?limit=60")
   const updateProducts= res.data.products.map((elem)=>({
     ...elem,id:nanoid(),
+    productid:elem.id,
             reviewCount: Math.floor(Math.random() * 900) + 100,
   })
 )

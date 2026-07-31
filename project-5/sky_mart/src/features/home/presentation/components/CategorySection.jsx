@@ -35,6 +35,7 @@ const CategorySection = () => {
 const navigate =useNavigate()
  
   return (
+    
     <section>
 
       <div className="mb-5 flex items-center justify-between">

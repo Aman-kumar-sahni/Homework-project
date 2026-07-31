@@ -9,7 +9,7 @@ import {
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { toast } from "react-toastify";
-const Navbar = () => {
+const Navbar = ({setIsCartOpen}) => {
   const navigate = useNavigate()
  const user =  JSON.parse(localStorage.getItem("currentUser"))
 
@@ -19,6 +19,7 @@ function logout(){
   toast.success("Logout successfull")
   navigate("login")
 }
+
 
   return (
     <header className="fixed left-0 top-0 z-50 w-full border-b border-white/10 bg-[#0d0d0d] text-white">
@@ -109,6 +110,9 @@ function logout(){
           {/* CART */}
 
           <button
+          onClick={()=>{
+            setIsCartOpen(true)
+          }}
             className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-gray-300 hover:text-[#eaff00]"
           >
 
