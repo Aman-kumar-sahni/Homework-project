@@ -10,6 +10,8 @@ import { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { cartContext } from "../features/cart/application/cartProvider";
+  import Swal from "sweetalert2";
+
 const Navbar = ({setIsCartOpen}) => {
   const navigate = useNavigate()
  const user =  JSON.parse(localStorage.getItem("currentUser"))
@@ -21,6 +23,42 @@ function logout(){
   navigate("/login")
 }
   const {totalQuantity}=useContext(cartContext)
+
+
+
+const handleLogout = async () => {
+const result = await Swal.fire({
+  title: "Are you sure?",
+  text: " want Logout?",
+  icon: "warning",
+
+  showCancelButton: true,
+
+  confirmButtonText: "Yes, Logout",
+  cancelButtonText: "Cancel",
+
+  background: "#1E1E1E",
+  color: "#F5F5F5",
+
+  confirmButtonColor: "#EAFF00",
+  cancelButtonColor: "#3A3A3A",
+
+  scrollbarPadding: false,   // ✅ Background shift fix
+  heightAuto: false,         // ✅ Mobile fix
+
+  customClass: {
+    popup: "premium-popup",
+    title: "premium-title",
+    htmlContainer: "premium-text",
+    confirmButton: "premium-confirm",
+    cancelButton: "premium-cancel",
+  },
+});
+  if (result.isConfirmed) {
+                logout()
+
+  }
+};
 
 
   return (
@@ -181,7 +219,7 @@ function logout(){
 
           <button
           onClick={()=>{
-            logout()
+            handleLogout()
 
           }}
             className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-gray-300 transition-all duration-200 hover:border-red-500 hover:bg-red-500/10 hover:text-red-500"
@@ -269,7 +307,7 @@ function logout(){
           </NavLink>
 
               <button onClick={()=>{
-                logout()
+                handleLogout()
               }} className="flex items-center gap-2 text-left text-amber-800 hover:text-[#eaff00] hover:text-amber-950">
 
                 <LogOut size={17} />

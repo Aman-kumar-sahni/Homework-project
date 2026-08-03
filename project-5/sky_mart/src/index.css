@@ -20,4 +20,65 @@ html::-webkit-scrollbar {
 body::-webkit-scrollbar {
   display: none;
 }
+
+.premium-popup {
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: linear-gradient(
+    145deg,
+    #2b2b2b,
+    #1a1a1a
+  );
+  box-shadow:
+    0 30px 60px rgba(0,0,0,.6),
+    inset 0 1px 1px rgba(255,255,255,.08),
+    inset 0 -2px 8px rgba(0,0,0,.5);
+}
+
+.premium-title{
+  color:#ffffff;
+  font-size:28px;
+  font-weight:800;
+  letter-spacing:.5px;
+}
+
+.premium-text{
+  color:#bdbdbd;
+  font-size:15px;
+  line-height:1.7;
+}
+
+.premium-confirm{
+  background:#EAFF00 !important;
+  color:#111 !important;
+  font-weight:700 !important;
+  border-radius:14px !important;
+  padding:12px 28px !important;
+  box-shadow:0 8px 20px rgba(234,255,0,.35);
+  transition:.25s;
+}
+
+.premium-confirm:hover{
+  transform:translateY(-2px);
+  box-shadow:0 14px 30px rgba(234,255,0,.45);
+}
+.premium-toast {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap:5px; /* 👈 Text aur Cross ke beech gap */
+}
+
+.premium-cancel{
+  background:#3b3b3b !important;
+  color:#fff !important;
+  border-radius:14px !important;
+  padding:12px 28px !important;
+  border:1px solid rgba(255,255,255,.08);
+  transition:.25s;
+}
+
+.premium-cancel:hover{
+  background:#4a4a4a !important;
+}
 @import "tailwindcss"

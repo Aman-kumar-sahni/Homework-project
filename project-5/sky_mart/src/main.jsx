@@ -13,43 +13,68 @@ createRoot(document.getElementById('root')).render(
         <CartProvider>
             <App/>
 
-
 <ToastContainer
+  toastClassName="premium-toast"
+
   position="bottom-right"
-  autoClose={2000}
+  autoClose={2200}
+  hideProgressBar={false}
+  newestOnTop
+  closeOnClick
+  pauseOnHover
+  draggable
+  theme="dark"
   closeButton={({ closeToast }) => (
     <button
       type="button"
       onClick={closeToast}
       className="
-        flex h-6 w-6 shrink-0
-        cursor-pointer
-        items-center justify-center
+        flex h-6 w-6 items-center justify-center
         rounded-full
-        bg-red-500
-        text-white
-        transition-all
-        duration-200
+        border border-red-500/30
+        bg-red-500/15
+        text-red-400
+        transition-all duration-200
         hover:scale-105
-        hover:bg-red-600
+        hover:bg-red-500
+        hover:text-white
       "
     >
       <X size={14} strokeWidth={2.5} />
     </button>
   )}
   toastStyle={{
-    width: "auto",
-    minWidth: "170px",
-    maxWidth: "270px",
-    minHeight: "52px",
-    background: "#181818",
-    color: "#ffffff",
-    border: "1px solid #2d2d2d",
-    borderRadius: "18px",
-    padding: "10px 12px 10px 16px",
-    boxShadow: "0 12px 35px rgba(0,0,0,0.35)",
+    width: "min(90vw, 240px)",
+    minHeight: "64px",
+
+    background:
+      "linear-gradient(145deg, #232323, #171717)",
+
+    color: "#F8F8F8",
+
+    border: "1px solid rgba(255,255,255,.08)",
+
+    borderRadius: "20px",
+
+    padding: "14px 16px",
+
+    backdropFilter: "blur(12px)",
+
+    boxShadow:
+      "0 18px 45px rgba(0,0,0,.45), inset 0 1px 1px rgba(255,255,255,.05)",
+
     fontSize: "14px",
-    fontWeight: "500",
+
+    fontWeight: "600",
+
+    letterSpacing: ".2px",
+  }}
+  progressStyle={{
+    background:
+      "linear-gradient(90deg,#EAFF00,#B6FF00)",
+
+    height: "4px",
+    borderRadius: "999px",
   }}
 />
 
