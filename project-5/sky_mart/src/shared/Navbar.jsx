@@ -6,9 +6,10 @@ import {
   X,
 } from "lucide-react";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { cartContext } from "../features/cart/application/cartProvider";
 const Navbar = ({setIsCartOpen}) => {
   const navigate = useNavigate()
  const user =  JSON.parse(localStorage.getItem("currentUser"))
@@ -17,8 +18,9 @@ const Navbar = ({setIsCartOpen}) => {
 function logout(){
   localStorage.removeItem("currentUser")
   toast.success("Logout successfull")
-  navigate("login")
+  navigate("/login")
 }
+  const {totalQuantity}=useContext(cartContext)
 
 
   return (
@@ -54,7 +56,7 @@ function logout(){
         <div className="hidden items-center gap-7 text-sm font-medium text-gray-500 md:flex">
 
           <NavLink
-            to="home"
+            to="/home"
             className={({ isActive }) =>
               `transition hover:text-amber-50 ${isActive ? "text-[#eaff00]" : ""
               }`
@@ -65,7 +67,7 @@ function logout(){
 
 
           <NavLink
-            to="shop"
+            to="/shop"
             className={({ isActive }) =>
               `transition hover:text-amber-50 ${isActive ? "text-[#eaff00]" : ""
               }`
@@ -76,7 +78,7 @@ function logout(){
 
 
           <NavLink
-            to="about"
+            to="/about"
             className={({ isActive }) =>
               `transition hover:text-amber-50 ${isActive ? "text-[#eaff00]" : ""
               }`
@@ -95,33 +97,84 @@ function logout(){
 
           {/* USER DESKTOP ONLY */}
 
-          <div className="hidden max-w-[180px] items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 md:flex">
+     <div className="
+  hidden
+  w-fit
+  max-w-[180px]
+  min-w-0
+  items-center
+  gap-2
+  rounded-xl
+  border border-white/10
+  bg-white/5
+  px-3 py-2
+  md:flex
+">
 
-            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#eaff00] text-xs font-bold text-black">
-{user?.name?.charAt(0).toUpperCase()}
-            </div>
+  <div className="
+    flex h-7 w-7 shrink-0
+    items-center justify-center
+    rounded-lg
+    bg-[#eaff00]
+    text-xs font-bold
+    text-black
+  ">
+    {user?.name?.charAt(0).toUpperCase()}
+  </div>
 
-           <span className="inline-block w-40 truncate text-sm font-medium">
-  {user?.name}
-</span>
-          </div>
+  <span className="
+    min-w-0
+    truncate
+    text-sm font-medium
+  ">
+    {user?.name}
+  </span>
+
+</div>
 
 
           {/* CART */}
 
-          <button
-          onClick={()=>{
-            setIsCartOpen(true)
-          }}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-gray-300 hover:text-[#eaff00]"
-          >
+     <div className="relative shrink-0">
+  <button
+    onClick={() => setIsCartOpen(true)}
+    className="
+      flex h-10 w-10
+      items-center justify-center
+      rounded-xl
+      border border-white/10
+      bg-white/5
+      text-gray-300
+      transition-all duration-200
+      hover:border-[#EAFF00]/40
+      hover:bg-[#EAFF00]/10
+      hover:text-[#EAFF00]
+      active:scale-95,
+      
+    "
+  >
+    <ShoppingCart size={18} />
+  </button>
 
-            <ShoppingCart size={19} />
-            
-
-
-          </button>
-
+  {totalQuantity > 0 && (
+    <span
+      className="
+        absolute
+        -right-1.5
+        -top-1.5
+        flex h-5 w-5
+        items-center justify-center
+        rounded-full
+        bg-[#EAFF00]
+        text-[10px]
+        font-bold
+        text-black
+      "
+    >
+      {totalQuantity}
+    </span>
+  )}
+</div>
 
 
           {/* LOGOUT */}
@@ -174,22 +227,50 @@ function logout(){
             <div className="flex flex-col gap-4 text-sm font-medium text-gray-300">
 
 
-              <a className="text-[#eaff00]">
-                Home
-              </a>
+                 <NavLink
+                 onClick={()=>{
+                  setOpen(false)
+                 }}
+            to="/home"
+            className={({ isActive }) =>
+              `transition hover:text-amber-50 ${isActive ? "text-[#eaff00]" : ""
+              }`
+            }
+          >
+            Home
+          </NavLink>
 
 
-              <a className="hover:text-[#eaff00]">
-                Shop
-              </a>
+          <NavLink
+            onClick={()=>{
+                  setOpen(false)
+                 }}
+            to="/shop"
+            className={({ isActive }) =>
+              `transition hover:text-amber-50 ${isActive ? "text-[#eaff00]" : ""
+              }`
+            }
+          >
+            Shop
+          </NavLink>
 
 
-              <a className="hover:text-[#eaff00]">
-                About
-              </a>
+          <NavLink
+            onClick={()=>{
+                  setOpen(false)
+                 }}
+            to="/about"
+            className={({ isActive }) =>
+              `transition hover:text-amber-50 ${isActive ? "text-[#eaff00]" : ""
+              }`
+            }
+          >
+            About
+          </NavLink>
 
-
-              <button className="flex items-center gap-2 text-left text-amber-800 hover:text-[#eaff00]">
+              <button onClick={()=>{
+                logout()
+              }} className="flex items-center gap-2 text-left text-amber-800 hover:text-[#eaff00] hover:text-amber-950">
 
                 <LogOut size={17} />
 

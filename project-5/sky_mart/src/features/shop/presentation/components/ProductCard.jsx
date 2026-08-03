@@ -7,18 +7,17 @@ import {
 } from "react-icons/fa";
 import { cartContext } from "../../../cart/application/cartProvider";
 import { AuthContext } from "../../../../app/providers/AppProviders";
-
+import { useNavigate } from "react-router";
 
 
 const ProductCard = ({ products }) => {
   const { cartItems } = useContext(AuthContext);
   const { addCartItem ,increaseItem} = useContext(cartContext);
-
+  const navigate = useNavigate()
   const isInCart = cartItems.some(
     (val) => val.productid === products.productid
   );
   
-
   const fullStars = Math.floor(products.rating);
 
   const hasHalfStar =
@@ -27,8 +26,14 @@ const ProductCard = ({ products }) => {
   const emptyStars =
     5 - fullStars - (hasHalfStar ? 1 : 0);
 
+    
   return (
-    <article className="group overflow-hidden rounded-3xl border border-zinc-800 bg-[#141414] transition-all duration-300 hover:border-[#EAFF00]">
+    <article 
+    onClick={()=>{
+      navigate(`/shop/${products.productid}`)
+    }}
+    
+    className="group  cursor-pointer overflow-hidden rounded-3xl border border-zinc-800 bg-[#141414] transition-all  duration-300 hover:border-[#EAFF00]">
 
       {/* Image */}
       <div className="relative p-3">
@@ -99,9 +104,10 @@ const ProductCard = ({ products }) => {
           {isInCart ? (
 
             <button
-            onClick={()=>{
-              increaseItem(products)
-            }}
+        onClick={(e) => {
+  e.stopPropagation();
+  increaseItem(products);
+}}
               type="button"
               className="
                 flex h-10
@@ -126,7 +132,11 @@ const ProductCard = ({ products }) => {
 
             <button
               type="button"
-              onClick={() => addCartItem(products)}
+            onClick={(e) => {
+  e.stopPropagation();
+  addCartItem(products);
+}}
+                
               className="
                 flex h-10
                 items-center gap-2

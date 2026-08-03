@@ -11,6 +11,7 @@ import ProtectedRoutes from "./protected/ProtectedRoutes";
 import PublicRoutes from "./public/PublicRoutes";
 
 import { Navigate } from "react-router";
+import ProductDetails from "../features/shop/presentation/components/productDetails/ProductDetails";
 const AppRoutes = () => {
   const router = createBrowserRouter([
    {
@@ -51,6 +52,9 @@ const AppRoutes = () => {
         },{
           path:"shop",
           element:<Shop/>
+        },{
+          path:"shop/:id",
+          element:<ProductDetails/>
         }
 
       ]

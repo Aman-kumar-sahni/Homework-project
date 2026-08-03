@@ -6,12 +6,19 @@ import {
   Star,
   Tag,
 } from "lucide-react";
+import { useContext } from "react";
+import { cartContext } from "../../../cart/application/cartProvider";
 
-const stats = [
+
+
+
+const StatsSection = () => {
+    const {totalPrice,totalQuantity}=useContext(cartContext)
+  const stats = [
   {
     id: 1,
     title: "Cart Items",
-    value: "0",
+    value: totalQuantity,
     subtitle: "In your bag",
     icon: Package,
     iconBg: "bg-lime-300/10",
@@ -20,7 +27,7 @@ const stats = [
   {
     id: 2,
     title: "Cart Value",
-    value: "$0.00",
+    value: `$ ${totalPrice.toFixed(2)}`,
     subtitle: "Ready to checkout",
     icon: TrendingUp,
     iconBg: "bg-sky-500/10",
@@ -46,7 +53,6 @@ const stats = [
   },
 ];
 
-const StatsSection = () => {
   return (
     <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
       {stats.map((item) => {

@@ -14,8 +14,18 @@ const MainLayout = () => {
       <Outlet/>
       <Footer/>
 
-      {isCartOpen&& <Cart setIsCartOpen={setIsCartOpen}/>}
-      
+{isCartOpen && (
+  <>
+    {/* Overlay */}
+    <div
+      onClick={() => setIsCartOpen(false)}
+      className="fixed inset-0 z-[50] bg-black/50 backdrop-blur-sm"
+    />
+
+    {/* Cart */}
+    <Cart setIsCartOpen={setIsCartOpen} />
+  </>
+)}      
     </div>
   )
 }

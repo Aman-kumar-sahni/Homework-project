@@ -3,13 +3,15 @@ import CartCard from "./CartCard";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../../../../app/providers/AppProviders";
+import { toast } from "react-toastify";
+import { cartContext } from "../../application/cartProvider";
 
-const Cart = ({setIsCartOpen}) => {
-  const navigate =   useNavigate()
-  
-  const {cartItems,setCartItems}=useContext(AuthContext)
+const Cart = ({ setIsCartOpen }) => {
+  const navigate = useNavigate()
+
+  const { cartItems, setCartItems } = useContext(AuthContext)
+  const {totalPrice,totalQuantity}=useContext(cartContext)
   const isEmpty = cartItems.length === 0;
-
 
   return (
     <aside
@@ -56,7 +58,7 @@ const Cart = ({setIsCartOpen}) => {
                 text-[#EAFF00]
               "
             >
-              {cartItems.length} items
+              {totalQuantity} items
             </span>
           )}
         </div>
@@ -71,12 +73,13 @@ const Cart = ({setIsCartOpen}) => {
             transition
             hover:bg-white/5
             hover:text-white
+            
           "
-          onClick={()=>{
-setIsCartOpen(false)
+          onClick={() => {
+            setIsCartOpen(false)
           }}
         >
-          <X  size={18} />
+          <X size={18} />
         </button>
       </div>
 
@@ -119,8 +122,8 @@ setIsCartOpen(false)
             Go shop something cool!
           </p>
 
-          <button onClick={()=>{
-              setIsCartOpen(false);
+          <button onClick={() => {
+            setIsCartOpen(false);
 
             navigate("/shop")
           }}
@@ -159,12 +162,15 @@ setIsCartOpen(false)
             "
           >
             <div className="flex flex-col gap-3">
-              {cartItems.map((item) => (
-                <CartCard
-                  key={item.id}
-                  item={item}
-                />
-              ))}
+              {cartItems.map((item, index) => {
+  console.log(index, item);
+  return (
+    <CartCard
+      key={item.id}
+      item={item}
+    />
+  );
+})}
             </div>
           </div>
 
@@ -187,12 +193,19 @@ setIsCartOpen(false)
               </span>
 
               <span className="text-xl font-bold text-white sm:text-2xl">
-                $384.92
+                {`$${(totalPrice??0).toFixed(2)}`}
               </span>
             </div>
 
             {/* Checkout */}
-            <button
+            <button onClick={()=>{
+              navigate("/shop")
+               localStorage.removeItem("cartItems");
+                setCartItems([]);
+              setIsCartOpen(false)
+                            toast.success("order placed 👊")
+
+            }}
               type="button"
               className="
                 mt-4
@@ -215,6 +228,11 @@ setIsCartOpen(false)
 
             {/* Clear cart */}
             <button
+              onClick={() => {
+
+                localStorage.removeItem("cartItems");
+                setCartItems([]);
+              }}
               type="button"
               className="
                 mx-auto mt-3
@@ -222,10 +240,14 @@ setIsCartOpen(false)
                 text-xs
                 text-zinc-500
                 transition
-                hover:text-zinc-300
+                hover:text-red-800
+                hover:underline
+                cursor-pointer
+                font-bold
+                active:scale-95
               "
             >
-              Clear cart
+              Clear Cart
             </button>
           </div>
         </>

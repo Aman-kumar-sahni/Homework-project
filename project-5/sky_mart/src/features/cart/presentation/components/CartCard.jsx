@@ -75,7 +75,12 @@ const {deleteCartItem,increaseQuantity,decreaseQuantity}=  useContext(cartContex
           <div className="mt-2 flex items-center gap-2">
             <button
               onClick={()=>{
+                if(item.quantity>1){
               decreaseQuantity(item)
+
+                }else{
+                  deleteCartItem(item)
+                }
             }}
               type="button"
               className="

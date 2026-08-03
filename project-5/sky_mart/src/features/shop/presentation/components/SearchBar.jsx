@@ -3,11 +3,10 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../app/providers/AppProviders";
 
 const SearchBar = () => {
-  const { products, setProducts, allProducts, setAllProducts ,category,setCategory} =
+  const { products, setProducts, allProducts, setAllProducts ,category,setCategory,featured,setFeatured} =
     useContext(AuthContext);
 
   const [search, setSearch] = useState("");
-  const [featured, setFeatured] = useState("Featured");
 
   function filterData() {
     let result = [...allProducts];
@@ -49,6 +48,7 @@ const SearchBar = () => {
   }
 
   useEffect(() => {
+    
     filterData();
   }, [search, category, featured]);
 
@@ -158,7 +158,7 @@ const SearchBar = () => {
               <option value="Featured">Featured</option>
               <option value="Price: Low -> High">Price: Low → High</option>
               <option value="Price: High -> Low">Price: High → Low</option>
-              <option value="High Rated">HighRated</option>
+              <option value="High Rated">High Rated</option>
               <option value="Low Rated">Low Rated</option>
 
             </select>
